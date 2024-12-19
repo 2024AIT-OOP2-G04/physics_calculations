@@ -13,6 +13,35 @@ figmaで作成
 ## 使用技術
 
 ## ディレクトリ構造
+コピペ用
+```
+┣ ┠ ┝ ├
+┫ ┨ ┥ ┤ 
+│ ┃
+─ ━
+┌ ┏ ┓ ┐
+└ ┗ ┛ ┘
+```
+root/
+  ┠ api/
+       ┠ graf/
+
+            ┠
+            
+   ┠ calculations/
+  ┃
+
+  ┠ template/
+     　┠index.html
+  ┃ 
+
+  ┠ static/
+
+  ┃  
+
+  ┠ app.py
+
+  ┠ 
 
 ## プロジェクトの作業分担
 
