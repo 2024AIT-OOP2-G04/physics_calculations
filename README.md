@@ -25,6 +25,7 @@ figmaで作成
       - gm.py
       - gamma_p.py
       - mu.py
+      - mu_vp_vg.py
     - input_form/
       - 好きに作る
   - template/
@@ -37,6 +38,7 @@ figmaで作成
       - gm.html
       - gamma_p.html
       - mu.html
+      - mu_vp_vg.py
     - input_form/
       - 好きに作る
   - static/
@@ -48,18 +50,31 @@ figmaで作成
       - gm.js
       - gamma_p.js
       - mu.js
+      - mu_vp_vg.py
       - input_form/
         - 好きに作る
   - app.py
 
 ## 　各データの形式
-
   htmlに入力した表のデータはjson形式で、
-  pyファイルで読み取って計算
-  jsファイルにて計算結果をfetch
+
+  ip_vg_curve.pyによりip_vg特性曲線を作成、接線を引く
+  
+  ip_vp_curve.py,vp_vg_curve.pyに値を渡し、グラフを作成
+  
+　ip_vg_curve.pyよりgm.pyに値を渡し、gmの計算
+ 
+　ip_vp_curve.pyよりgamma_p.pyに値を渡し、gamma_pを計算
+ 
+　gm.py,gamma_p.pyよりmu.pyに値を渡し、muを計算
+　
+　vp_vg_curve.pyよりmu_vp_vg.pyに値を渡し、mu(vp_vg特性曲線より得られるμ)を計算
+
   htmlに帰ってきた内容を書く
 
-  jsonの中身間違ってたらごめん
+  
+
+  jsonの中身
 
   ```json
     "vp230":{
