@@ -58,7 +58,7 @@ figmaで作成
 ## 　各データの形式
   htmlに入力した表のデータはjson形式で、
 
-  ip_vg_curve.pyによりip_vg特性曲線を作成、接線を引く
+  ip_vg_curve.pyにより$I_p-V_g$特性曲線を作成、接線を引く
   
   ip_vp_curve.py,vp_vg_curve.pyに値を渡し、グラフを作成
   
@@ -68,7 +68,7 @@ figmaで作成
  
 　gm.py,gamma_p.pyよりmu.pyに値を渡し、muを計算
 　
-　vp_vg_curve.pyよりmu_vp_vg.pyに値を渡し、mu(vp_vg特性曲線より得られるμ)を計算
+　vp_vg_curve.pyよりmu_vp_vg.pyに値を渡し、mu($V_p-V_g$特性曲線より得られる$μ$)を計算
 
   htmlに帰ってきた内容を書く
 
