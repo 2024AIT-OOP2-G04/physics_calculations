@@ -22,10 +22,7 @@ figmaで作成
       - ip_vp_curve.py
       - vp_vg_curve.py
     - calculations/
-      - gm.py
-      - gamma_p.py
-      - mu.py
-      - mu_vp_vg.py
+      - calculations_a.py
     - input_form/
       - 好きに作る
   - template/
@@ -35,10 +32,7 @@ figmaで作成
       - ip_vp_curve.html
       - vp_vg_curve.html
     - calculations/
-      - gm.html
-      - gamma_p.html
-      - mu.html
-      - mu_vp_vg.py
+      - calculations_a.html
     - input_form/
       - 好きに作る
   - static/
@@ -47,33 +41,32 @@ figmaで作成
       - ip_vp_curve.js
       - vp_vg_curve.js
     - calculations/
-      - gm.js
-      - gamma_p.js
-      - mu.js
-      - mu_vp_vg.py
+      - calculations_a.js
       - input_form/
         - 好きに作る
   - app.py
 
-## 　各データの形式
-  htmlに入力した表のデータはjson形式で、
+## 実際のデータの動き
+  
+  1. app.pyより、index.htmlが立ち上がる。
+  2. 
 
-  ip_vg_curve.pyによりip_vg特性曲線を作成、接線を引く
+  ip_vg_curve.pyによりip_vg特性曲線を作成、接線を引く 接線は現状はユーザに入力させる
   
   ip_vp_curve.py,vp_vg_curve.pyに値を渡し、グラフを作成
   
-　ip_vg_curve.pyよりgm.pyに値を渡し、gmの計算
+　ip_vg_curve.pyよりcalculations_a.pyに値を渡し、gmの計算
  
-　ip_vp_curve.pyよりgamma_p.pyに値を渡し、gamma_pを計算
+　ip_vp_curve.pyよりcalculations_a.pyに値を渡し、gamma_pを計算
  
-　gm.py,gamma_p.pyよりmu.pyに値を渡し、muを計算
+　gm.py,gamma_p.pyよりcalculations_a.pyに値を渡し、muを計算
 　
-　vp_vg_curve.pyよりmu_vp_vg.pyに値を渡し、mu(vp_vg特性曲線より得られるμ)を計算
+　 vp_vg_curve.pyよりcalculations_a.pyに値を渡し、mu(vp_vg特性曲線より得られるμ)を計算
 
   htmlに帰ってきた内容を書く
 
-  
 
+## 　各データの形式
   jsonの中身
 
   ```json
