@@ -4,7 +4,9 @@
 
 ## ブランチ名
 　学籍番号-作業内容を英語で
-　例　
+ 
+　例　ip_vg_curveのグラフの描写
+ 
   k23095-ip_vg_curve-graph-depiction
 
 ## コミットメッセージ
