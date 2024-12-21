@@ -16,15 +16,16 @@ figmaで作成
 ## ディレクトリ構造
 
 - root/
-  - api/
-    - graf/
-    グラフ作成api
-      - ip_vg_curve.py 橋本亘
-      - ip_vp_curve.py　岡田
-      - vp_vg_curve.py　未定
-    - calculations/
-      計算api 計算結果を返す
-      - calculations_a.py 村瀬
+  - routes
+    - api/
+      - graf/
+      グラフ作成api
+        - ip_vg_curve.py 橋本亘
+        - ip_vp_curve.py　岡田
+        - vp_vg_curve.py　未定
+      - calculations/
+        計算api 計算結果を返す
+        - calculations_a.py 村瀬
   - template/
     - index.html 梶原
   - static/
@@ -168,8 +169,5 @@ figmaで作成
 
 ## 制作の流れ
 
-- 川端
-- 橋本亘
-- 岡田
-- 梶原
-- 村瀬
+figmaにて雑PERT図を作成しました
+<https://www.figma.com/board/rifkiI1aJN4qKjaS06qPr6/Pert-Chart-Template-(Community)?node-id=0-1&t=Jk55dxfCwypw76M6-1>
