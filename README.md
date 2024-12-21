@@ -58,7 +58,7 @@ figmaで作成中
     　計算結果用js　pyファイルに値を送るために使う
       - calculations_a.js　村瀬
     - comment
-      - comment.py 川端
+      - comment.js 川端
   - app.py　基本誰も変更しない
 
 ## 　各データの形式
