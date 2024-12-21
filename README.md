@@ -42,21 +42,6 @@ figmaで作成
   - app.py　基本誰も変更しない
 
 ## 　各データの形式
-  htmlに入力した表のデータはjson形式で、
-
-  ip_vg_curve.pyにより $I_p-V_g$ 特性曲線を作成、接線を引く
-  
-  ip_vp_curve.py,vp_vg_curve.pyに値を渡し、グラフを作成
-  
-　ip_vg_curve.pyよりgm.pyに値を渡し、gmの計算
- 
-　ip_vp_curve.pyよりgamma_p.pyに値を渡し、gamma_pを計算
- 
-　gm.py,gamma_p.pyよりmu.pyに値を渡し、muを計算
-
-  htmlに帰ってきた内容を書く
-
-## 　各データの形式
 
   ip_vg特性曲線用のinputデータ
   incは増加、decは減少過程 要素数9の配列
