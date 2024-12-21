@@ -63,7 +63,7 @@ figmaで作成中
 
 ## 　各データの形式
 
-  ip_vg特性曲線用のinputデータ
+  ### ip_vg特性曲線用のinputデータ
   incは増加、decは減少過程 要素数9の配列
 
   ```json
@@ -95,7 +95,7 @@ figmaで作成中
   }  
   ```
 
-  gm計算用の値 json、辞書型データ
+  ### gm計算用の値 json、辞書型データ
   
   ```json
   calculation_gm:{
@@ -109,7 +109,7 @@ figmaで作成中
   }  
   ```
 
-　ip_vp特性曲線用のinputデータ
+　### ip_vp特性曲線用のinputデータ
   -6,-8,-10Vのデータを作成する
   要素数3の配列
 
@@ -127,7 +127,7 @@ figmaで作成中
   }  
   ```
 
-  gamma_p計算用の値 json、辞書型データ
+  ### gamma_p計算用の値 json、辞書型データ
   
   ```json
   calculation_gamma_p:{
@@ -138,7 +138,7 @@ figmaで作成中
   }  
   ```
 
-  vp_vg特性曲線用のinputデータ
+  ### vp_vg特性曲線用のinputデータ
   ip_defaultは接線を引いたところのip
   要素数3の配列
 
