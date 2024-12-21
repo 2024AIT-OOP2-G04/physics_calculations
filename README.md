@@ -3,6 +3,9 @@
 ## コーディングルール
 
 ## ブランチ名
+　学籍番号-作業内容を英語で
+　例　
+  k23095-ip_vg_curve-graph-depiction
 
 ## コミットメッセージ
 
@@ -18,7 +21,7 @@ figmaで作成
 - root/
   - routes
     - api/
-      - graf/
+      - graph/
       グラフ作成api
         - ip_vg_curve.py 橋本亘
         - ip_vp_curve.py　岡田
@@ -29,7 +32,7 @@ figmaで作成
   - template/
     - index.html 梶原
   - static/
-    - graf/
+    - graph/
       グラフ描写用js pyファイルに値を送るために使う
       - ip_vg_curve.js 橋本亘
       - ip_vp_curve.js 岡田
