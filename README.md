@@ -41,19 +41,18 @@ figmaで作成
       - comment.py 川端
   - app.py　基本誰も変更しない
 
-## 実際のデータの動き
-  
-  ip_vg_curve.pyによりip_vg特性曲線を作成、接線を引く 接線は現状はユーザに入力させる
+## 　各データの形式
+  htmlに入力した表のデータはjson形式で、
+
+  ip_vg_curve.pyにより $I_p-V_g$ 特性曲線を作成、接線を引く
   
   ip_vp_curve.py,vp_vg_curve.pyに値を渡し、グラフを作成
   
-　ip_vg_curve.pyよりcalculations_a.pyに値を渡し、gmの計算
-
-　ip_vp_curve.pyよりcalculations_a.pyに値を渡し、gamma_pを計算
-
-　gm.py,gamma_p.pyよりcalculations_a.pyに値を渡し、muを計算
-
-　 vp_vg_curve.pyよりcalculations_a.pyに値を渡し、mu(vp_vg特性曲線より得られるμ)を計算
+　ip_vg_curve.pyよりgm.pyに値を渡し、gmの計算
+ 
+　ip_vp_curve.pyよりgamma_p.pyに値を渡し、gamma_pを計算
+ 
+　gm.py,gamma_p.pyよりmu.pyに値を渡し、muを計算
 
   htmlに帰ってきた内容を書く
 
