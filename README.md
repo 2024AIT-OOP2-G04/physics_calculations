@@ -19,35 +19,26 @@ figmaで作成
   - api/
     - graf/
     グラフ作成api
-      - ip_vg_curve.py
-      - ip_vp_curve.py
-      - vp_vg_curve.py
+      - ip_vg_curve.py 橋本亘
+      - ip_vp_curve.py　岡田
+      - vp_vg_curve.py　未定
     - calculations/
       計算api 計算結果を返す
-      - calculations_a.py
+      - calculations_a.py 村瀬
   - template/
-    - index.html
-    - graf/
-      グラフ描写用html pyファイルの方でグラフを描写するなら使わない
-      - ip_vg_curve.html
-      - ip_vp_curve.html
-      - vp_vg_curve.html
-    - calculations/
-      計算結果を受け取って描写するhtml
-      - calculations_a.html
-    - input/
-      入力フォームを描写するhtml
-      - input_form.html
+    - index.html 梶原
   - static/
     - graf/
       グラフ描写用js pyファイルに値を送るために使う
-      - ip_vg_curve.js
-      - ip_vp_curve.js
-      - vp_vg_curve.js
+      - ip_vg_curve.js 橋本亘
+      - ip_vp_curve.js 岡田
+      - vp_vg_curve.js 未定
     - calculations/
     　計算結果用js　pyファイルに値を送るために使う
-      - calculations_a.js
-  - app.py
+      - calculations_a.js　村瀬
+    - comment
+      - comment.py 川端
+  - app.py　基本誰も変更しない
 
 ## 実際のデータの動き
   
@@ -170,7 +161,15 @@ figmaで作成
 | -------- | ---------- | -------- | ----------------------------- |
 | リーダー | 橋本粋人   | K23095   | 進捗の管理                    |
 | メンバー | 川端文人   | K23043   | 曜日わけしたコメントを作成    |
-| メンバー | 橋本亘     | K23096   | ip_vp特性曲線の作成P100の上側 |
+| メンバー | 橋本亘     | K23096   | ip_vg特性曲線の作成P100の上側 |
 | メンバー | 岡田隆之介 | K23023   | ip_vp特性曲線の作成P100の左下 |
 | メンバー | 梶原陽     | K23032   | 入力フォームを作成            |
 | メンバー | 村瀬瑠月   | K23126   | 計算                          |
+
+## 制作の流れ
+
+- 川端
+- 橋本亘
+- 岡田
+- 梶原
+- 村瀬
