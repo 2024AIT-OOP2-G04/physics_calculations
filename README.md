@@ -67,7 +67,7 @@ figmaで作成中
   incは増加、decは減少過程 要素数9の配列
 
   ```json
-  input_ip_vg:{
+  "input_ip_vg":{
     "vp_230":{
       "inc":[
         0.00, 0.10, 0.50, 1.45, 3.30, 6.20, 10.00, 15.25, 21.80
@@ -98,7 +98,7 @@ figmaで作成中
   ### gm計算用の値 json、辞書型データ
   
   ```json
-  calculation_gm:{
+  "calculation_gm":{
     // 動作点のip
     "ip_default":12.90,
     //vg=-6のときのip
@@ -115,7 +115,7 @@ figmaで作成中
   要素数3の配列
 
   ```json
-  input_ip_vp:{
+  "input_ip_vp":{
     "vg_minus6":[
       15.30,18.45,21.98
     ],
@@ -131,7 +131,7 @@ figmaで作成中
   ### gamma_p計算用の値 json、辞書型データ
   
   ```json
-  calculation_gamma_p:{
+  "calculation_gamma_p":{
     //vp=180のときのip(vg=-8V)
     "vp_180_ip":3.00,
     //vp=300のときのip(vg=-8V)
@@ -145,7 +145,7 @@ figmaで作成中
   要素数3の配列
 
   ```json
-  input_vp_vg:{
+  "input_vp_vg":{
     // 動作点のip
     "ip_default":12.90,
     "vg_minus5":[
