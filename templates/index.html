@@ -1,28 +1,328 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <title>T12の計算</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='base-style.css') }}"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
-    <div>
-      <canvas id="ip_vg_curve_graf" width="" height=""></canvas>
-      <script src="/static/graf/ip_vg_curve.js"></script>
-    </div>
-    <div>
-      <canvas id="ip_vp_curve_graf" width="" height=""></canvas>
-      <script src="/static/graf/ip_vp_curve.js"></script>
-    </div>
-    <div>
-      <canvas id="vp_vg_curve_graf" width="" height=""></canvas>
-      <script src="/static/graf/vp_vg_curve.js"></script>
-    </div>
-    <div><script src="/static/calculations/calculations_a.js"></script></div>
-    <div><script src="/static/comment/comment.js"></script></div>
-  </body>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T12の計算</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid black;
+      text-align: center;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input[type="number"] {
+      width: 80px;
+    }
+  </style>
+  <script>
+    // 平均値を計算する関数
+    function updateAverage(rowIndex) {
+      // 増加過程と減少過程の入力値を取得
+      const incValue0 = parseFloat(document.getElementById(`row-${rowIndex}-inc-0`).value) || 0;
+      const decValue0 = parseFloat(document.getElementById(`row-${rowIndex}-dec-0`).value) || 0;
+      const incValue1 = parseFloat(document.getElementById(`row-${rowIndex}-inc-1`).value) || 0;
+      const decValue1 = parseFloat(document.getElementById(`row-${rowIndex}-dec-1`).value) || 0;
+      const incValue2 = parseFloat(document.getElementById(`row-${rowIndex}-inc-2`).value) || 0;
+      const decValue2 = parseFloat(document.getElementById(`row-${rowIndex}-dec-2`).value) || 0;
+
+      // 平均を計算
+      const average0 = (incValue0 + decValue0) / 2;
+      num0 = Math.round(average0 * 100) / 100;
+      const average1 = (incValue1 + decValue1) / 2;
+      num1 = Math.round(average1 * 100) / 100;
+      const average2 = (incValue2 + decValue2) / 2;
+      num2 = Math.round(average2 * 100) / 100;
+
+      // 結果をavgセルに表示
+      document.getElementById(`row-${rowIndex}-avg-0`).textContent = num0.toFixed(2);
+      document.getElementById(`row-${rowIndex}-avg-1`).textContent = num1.toFixed(2);
+      document.getElementById(`row-${rowIndex}-avg-2`).textContent = num2.toFixed(2);
+    }
+
+    // すべての行と列で平均値を計算
+    function calculateAllAverages() {
+      const rows = document.querySelectorAll('tbody tr');
+      rows.forEach((_, rowIndex) => {
+        updateAverage(rowIndex);
+      });
+    }
+
+    // Updateボタンが押されたときの処理
+    function handleSubmit(event) {
+      event.preventDefault(); // ページリロードを防ぐ
+      calculateAllAverages(); // 平均値を計算
+    }
+  </script>
+</head>
+
+<body>
+  <h2>T12の計算</h2>
+  <form onsubmit="handleSubmit(event)">
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2" class="custom-th">
+            <div class="top-right">Vp</div>
+            <div class="bottom-left">Vg</div>
+          </th>
+          <th colspan="3">230.0 V</th>
+          <th colspan="3">250.0 V</th>
+          <th colspan="3">270.0 V</th>
+        </tr>
+        <tr>
+          <th>増加過程</th>
+          <th>減少過程</th>
+          <th>平均値</th>
+          <th>増加過程</th>
+          <th>減少過程</th>
+          <th>平均値</th>
+          <th>増加過程</th>
+          <th>減少過程</th>
+          <th>平均値</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>-20.00V</td>
+          <td><input type="number" id="row-0-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-0-dec-0" step="0.01"></td>
+          <td id="row-0-avg-0">0.00</td>
+          <td><input type="number" id="row-0-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-0-dec-1" step="0.01"></td>
+          <td id="row-0-avg-1">0.00</td>
+          <td><input type="number" id="row-0-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-0-dec-2" step="0.01"></td>
+          <td id="row-0-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-18.00</td>
+          <td><input type="number" id="row-1-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-1-dec-0" step="0.01"></td>
+          <td id="row-1-avg-0">0.00</td>
+          <td><input type="number" id="row-1-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-1-dec-1" step="0.01"></td>
+          <td id="row-1-avg-1">0.00</td>
+          <td><input type="number" id="row-1-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-1-dec-2" step="0.01"></td>
+          <td id="row-1-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-16.00</td>
+          <td><input type="number" id="row-2-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-2-dec-0" step="0.01"></td>
+          <td id="row-2-avg-0">0.00</td>
+          <td><input type="number" id="row-2-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-2-dec-1" step="0.01"></td>
+          <td id="row-2-avg-1">0.00</td>
+          <td><input type="number" id="row-2-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-2-dec-2" step="0.01"></td>
+          <td id="row-2-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-14.00</td>
+          <td><input type="number" id="row-3-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-3-dec-0" step="0.01"></td>
+          <td id="row-3-avg-0">0.00</td>
+          <td><input type="number" id="row-3-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-3-dec-1" step="0.01"></td>
+          <td id="row-3-avg-1">0.00</td>
+          <td><input type="number" id="row-3-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-3-dec-2" step="0.01"></td>
+          <td id="row-3-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-12.00</td>
+          <td><input type="number" id="row-4-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-4-dec-0" step="0.01"></td>
+          <td id="row-4-avg-0">0.00</td>
+          <td><input type="number" id="row-4-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-4-dec-1" step="0.01"></td>
+          <td id="row-4-avg-1">0.00</td>
+          <td><input type="number" id="row-4-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-4-dec-2" step="0.01"></td>
+          <td id="row-4-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-10.00</td>
+          <td><input type="number" id="row-5-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-5-dec-0" step="0.01"></td>
+          <td id="row-5-avg-0">0.00</td>
+          <td><input type="number" id="row-5-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-5-dec-1" step="0.01"></td>
+          <td id="row-5-avg-1">0.00</td>
+          <td><input type="number" id="row-5-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-5-dec-2" step="0.01"></td>
+          <td id="row-5-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-8.00</td>
+          <td><input type="number" id="row-6-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-6-dec-0" step="0.01"></td>
+          <td id="row-6-avg-0">0.00</td>
+          <td><input type="number" id="row-6-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-6-dec-1" step="0.01"></td>
+          <td id="row-6-avg-1">0.00</td>
+          <td><input type="number" id="row-6-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-6-dec-2" step="0.01"></td>
+          <td id="row-6-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-6.00</td>
+          <td><input type="number" id="row-7-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-7-dec-0" step="0.01"></td>
+          <td id="row-7-avg-0">0.00</td>
+          <td><input type="number" id="row-7-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-7-dec-1" step="0.01"></td>
+          <td id="row-7-avg-1">0.00</td>
+          <td><input type="number" id="row-7-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-7-dec-2" step="0.01"></td>
+          <td id="row-7-avg-2">0.00</td>
+        </tr>
+        <tr>
+          <td>-4.00</td>
+          <td><input type="number" id="row-8-inc-0" step="0.01"></td>
+          <td><input type="number" id="row-8-dec-0" step="0.01"></td>
+          <td id="row-8-avg-0">0.00</td>
+          <td><input type="number" id="row-8-inc-1" step="0.01"></td>
+          <td><input type="number" id="row-8-dec-1" step="0.01"></td>
+          <td id="row-8-avg-1">0.00</td>
+          <td><input type="number" id="row-8-inc-2" step="0.01"></td>
+          <td><input type="number" id="row-8-dec-2" step="0.01"></td>
+          <td id="row-8-avg-2">0.00</td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit">Update</button>
+  </form>
+</body>
+
+</html>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T12の計算</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid black;
+      text-align: center;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input[type="number"] {
+      width: 80px;
+    }
+  </style>
+  <script>
+    // 平均値を計算する関数
+    function updateAverage(rowIndex) {
+      // 増加過程と減少過程の入力値を取得
+      const incValue0 = parseFloat(document.getElementById(`row-${rowIndex}-inc-0`).value) || 0;
+      const decValue0 = parseFloat(document.getElementById(`row-${rowIndex}-dec-0`).value) || 0;
+      const incValue1 = parseFloat(document.getElementById(`row-${rowIndex}-inc-1`).value) || 0;
+      const decValue1 = parseFloat(document.getElementById(`row-${rowIndex}-dec-1`).value) || 0;
+      const incValue2 = parseFloat(document.getElementById(`row-${rowIndex}-inc-2`).value) || 0;
+      const decValue2 = parseFloat(document.getElementById(`row-${rowIndex}-dec-2`).value) || 0;
+
+      // 平均を計算
+      const average0 = (incValue0 + decValue0) / 2;
+      num0 = Math.round(average0 * 100) / 100;
+      const average1 = (incValue1 + decValue1) / 2;
+      num1 = Math.round(average1 * 100) / 100;
+      const average2 = (incValue2 + decValue2) / 2;
+      num2 = Math.round(average2 * 100) / 100;
+
+      // 結果をavgセルに表示
+      document.getElementById(`row-${rowIndex}-avg-0`).textContent = num0.toFixed(2);
+      document.getElementById(`row-${rowIndex}-avg-1`).textContent = num1.toFixed(2);
+      document.getElementById(`row-${rowIndex}-avg-2`).textContent = num2.toFixed(2);
+    }
+
+    // すべての行と列で平均値を計算
+    function calculateAllAverages() {
+      const rows = document.querySelectorAll('tbody tr');
+      rows.forEach((_, rowIndex) => {
+        updateAverage(rowIndex);
+      });
+    }
+
+    // Updateボタンが押されたときの処理
+    function handleSubmit(event) {
+      event.preventDefault(); // ページリロードを防ぐ
+      calculateAllAverages(); // 平均値を計算
+    }
+  </script>
+</head>
+
+<body>
+  <h2>Vp-Vg特性曲線</h2>
+  <form onsubmit="handleSubmit(event)">
+    <table>
+      <tbody>
+        <tr>
+          <td>基準のIp</td>
+          <td><input type="number" id="row-0-inc-0" step="0.01"></td>
+        </tr>
+      </tbody>
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2" class="custom-th">
+              <div class="top-right">Ip</div>
+              <div class="bottom-left">Vp</div>
+            </th>
+            <th colspan="1">基準の-5mA</th>
+            <th colspan="1">基準</th>
+            <th colspan="1">基準の+5mA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>230.00V</td>
+            <td><input type="number" id="row-0-inc-0" step="0.01"></td>
+            <td><input type="number" id="row-0-inc-1" step="0.01"></td>
+            <td><input type="number" id="row-0-inc-2" step="0.01"></td>
+          </tr>
+          <tr>
+            <td>250.00</td>
+            <td><input type="number" id="row-1-inc-0" step="0.01"></td>
+            <td><input type="number" id="row-1-inc-1" step="0.01"></td>
+            <td><input type="number" id="row-1-inc-2" step="0.01"></td>
+          </tr>
+          <tr>
+            <td>270.00</td>
+            <td><input type="number" id="row-2-inc-0" step="0.01"></td>
+            <td><input type="number" id="row-2-inc-1" step="0.01"></td>
+            <td><input type="number" id="row-2-inc-2" step="0.01"></td>
+          </tr>
+      </table>
+      <button type="submit">Update</button>
+  </form>
+</body>
+
 </html>
