@@ -28,17 +28,48 @@ input_data = {
     "calculation_gamma_p": {
         "vp_180_ip": 3.00,  # mA
         "vp_300_ip": 20.3   # mA
+    },
+    "input_vp_vg": {
+        "ip_default": 12.90,
+        "vg_minus5": [15.30, 18.45, 21.98],
+        "vg_default": [10.5, 12.83, 15.83],
+        "vg_plus5": [6.23, 8.38, 10.88]
+    },
+    "calculation_mu": {
+        "vp_180_vg": -3.90,
+        "vp_300_vg": -10.80
+    }
+}
+calculation_gm_data = {
+    "calculation_gm": {
+        "ip_default": 12.90,  # 表示する Ip の値
+        "vg_minus6_ip": 17.7,
+        "ip_0_vg": -13.20
     }
 }
 
+calculation_gamma_p_data = {
+    "calculation_gamma_p": {
+        "vp_180_ip": 3.00,  # mA
+        "vp_300_ip": 20.3   # mA
+    }
+}    
+
+calculation_mu_data={
+    "calculation_mu": {
+        "vp_180_vg": -3.90,
+        "vp_300_vg": -10.80
+    }
+}
+
+
 # gmの計算
 def calculate_gm(data):
-    ip_default = data["calculation_gm"]["ip_default"]
     vg_minus6_ip = data["calculation_gm"]["vg_minus6_ip"] * 0.001  # mA → A
     ip_0_vg = abs(data["calculation_gm"]["ip_0_vg"])  # 絶対値を取る
-
+    
     delta_ip = vg_minus6_ip  # ΔIp
-    delta_vg = ip_0_vg - 6   # ΔVg
+    delta_vg = ip_0_vg - 6.0  # ΔVg
 
     gm = delta_ip / delta_vg
     return gm
@@ -56,19 +87,36 @@ def calculate_gamma_p(data):
 
 # μの計算
 def calculate_mu(gm, gamma_p):
-    mu = gm * gamma_p *0.1
+    mu = gm * gamma_p
     return mu
 
+# Vp-Vgからのμ計算
+def calculate_myu(data):
+    vp_180_vg = data["calculation_mu"]["vp_180_vg"]
+    vp_300_vg = data["calculation_mu"]["vp_300_vg"]
+
+    # Vp-Vg の差分を計算
+    delta_vg = 300 - 180  # Vgの差分
+    delta_vp = vp_300_vg - vp_180_vg  # Vpの差分
+
+    # μの計算
+    myu = delta_vg / abs(delta_vp)
+    return myu
+
+
 # 計算の実行
-Ip_default = input_data["calculation_gm"]["ip_default"]  # Ip のデフォルト値を取得
-gm = calculate_gm(input_data)                            # gm計算
-gamma_p = calculate_gamma_p(input_data)                 # γp計算
+Ip_default = calculation_gm_data["calculation_gm"]["ip_default"]  # Ip のデフォルト値を取得
+gm = calculate_gm(calculation_gm_data)                            # gm計算
+gamma_p = calculate_gamma_p(calculation_gamma_p_data)                 # γp計算
 mu = calculate_mu(gm, gamma_p)                          # μ計算
+myu = calculate_myu(calculation_mu_data)                         # Vp-Vg曲線からのμ計算
+
 
 # 結果の出力
 print(f"vp = {vp} V")
-print(f"vg = {vg} V")
-print(f"Ip = {Ip_default} mA")
-print(f"gm = {gm:.5f} Ω-1乗")
-print(f"gamma_p = {gamma_p:.5f} Ω")
-print(f"mu = {mu:.2f}")
+print(f"vg = {vg:.2f} V")
+print(f"Ip = {Ip_default:.2f} mA")
+print(f"gm = {gm:.6f} Ω-1乗")
+print(f"gamma_p = {gamma_p:.2f} Ω")
+print(f"μ (gm・γp) = {mu:.2f}")
+print(f"μ (vp-vg) = {myu:.2f}")
