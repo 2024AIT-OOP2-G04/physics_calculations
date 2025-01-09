@@ -2,64 +2,73 @@ import numpy as np
 
 # 初期設定
 vp = 250.0  # プレート電圧
-vg = -8.0   # グリッド電圧
+vg = -8.00  # グリッド電圧
 
-# サンプルデータ: (x, y)
-# 実験データをここに入力してください
-data = [
-    (250.0, -8.0, 1.5), (250.0, -8.0, 2.2), (250.0, -8.0, 1.9), 
-    (250.0, -8.0, 1.8), (250.0, -8.0, 2.1)
-]
+# 入力データ構造
+input_data = {
+    "input_ip_vg": {
+        "vp_230": {
+            "inc": [0.00, 0.10, 0.50, 1.45, 3.30, 6.20, 10.00, 15.25, 21.80],
+            "dec": [0.00, 0.10, 0.50, 1.50, 3.30, 6.25, 10.10, 15.35, 21.70]
+        },
+        "vp_250": {
+            "inc": [0.05, 0.35, 1.10, 2.60, 5.00, 8.40, 12.80, 18.50, 25.60],
+            "dec": [0.05, 0.35, 1.10, 2.65, 4.95, 8.35, 12.85, 18.40, 25.50]
+        },
+        "vp_270": {
+            "inc": [0.25, 0.85, 2.05, 4.10, 7.00, 10.85, 15.95, 22.00, 29.55],
+            "dec": [0.25, 0.80, 2.00, 4.05, 6.90, 10.90, 15.70, 21.95, 29.50]
+        }
+    },
+    "calculation_gm": {
+        "ip_default": 12.90,  # 表示する Ip の値
+        "vg_minus6_ip": 17.7,
+        "ip_0_vg": -13.20
+    },
+    "calculation_gamma_p": {
+        "vp_180_ip": 3.00,  # mA
+        "vp_300_ip": 20.3   # mA
+    }
+}
 
-# 条件1: Ipを計算 (250V, -8Vの平均)
-def calculate_Ip(data, vp, vg):
-    relevant_data = [entry[2] for entry in data if entry[0] == vp and entry[1] == vg]
-    if len(relevant_data) > 0:
-        # 平均値を計算
-        avg = np.mean(relevant_data)
-        # 有効数字1桁に丸めて最後に0を付ける
-        rounded = round(avg, -int(np.floor(np.log10(abs(avg)))) + 1)  # 有効数字1桁に丸める
-        return float(f"{rounded:.1g}")  # 文字列として処理して最後に0を付加
-    else:
-        return None
-    
-print("vp = 250.0 V")
-print("vg = -8.00 V")    
+# gmの計算
+def calculate_gm(data):
+    ip_default = data["calculation_gm"]["ip_default"]
+    vg_minus6_ip = data["calculation_gm"]["vg_minus6_ip"] * 0.001  # mA → A
+    ip_0_vg = abs(data["calculation_gm"]["ip_0_vg"])  # 絶対値を取る
 
-# Ipを計算
-Ip = calculate_Ip(data, vp, vg)
-print(f"Ip = {Ip} mA")
+    delta_ip = vg_minus6_ip  # ΔIp
+    delta_vg = ip_0_vg - 6   # ΔVg
 
-# 条件2: yが0または5で終わる点を取得
-def filter_points(data):
-    candidates = []
-    for x, y in [(d[0], d[2]) for d in data]:  # (x, y)に変換
-        # yが0または5で終わる
-        if y % 5 == 0:
-            # xも0または5で終わる場合を優先
-            if x % 5 == 0:
-                candidates.append((x, y, 1))  # 優先度1
-            # 次に偶数のx
-            elif x % 2 == 0:
-                candidates.append((x, y, 2))  # 優先度2
-            else:
-                candidates.append((x, y, 3))  # 優先度3
-    return sorted(candidates, key=lambda p: p[2])  # 優先度でソート
+    gm = delta_ip / delta_vg
+    return gm
 
-# 条件に従った点を取得
-filtered_points = filter_points(data)
+# γpの計算
+def calculate_gamma_p(data):
+    vp_180_ip = data["calculation_gamma_p"]["vp_180_ip"] * 0.001  # mA → A
+    vp_300_ip = data["calculation_gamma_p"]["vp_300_ip"] * 0.001  # mA → A
 
-# 十分に離れた2点を選ぶ
-if len(filtered_points) >= 2:
-    point1 = filtered_points[0]
-    point2 = None
-    for p in filtered_points[1:]:
-        if abs(p[0] - point1[0]) > 2:  # 適度な距離を確保
-            point2 = p
-            break
-    if point2:
-        print("選ばれた2点:", point1[:2], point2[:2])
-    else:
-        print("十分に離れた2点が見つかりませんでした。")
-else:
-    print("条件を満たす点が少なすぎます。")
+    delta_vg = 300 - 180  # ΔVg
+    delta_ip = vp_300_ip - vp_180_ip  # ΔIp
+
+    gamma_p = delta_vg / delta_ip
+    return gamma_p
+
+# μの計算
+def calculate_mu(gm, gamma_p):
+    mu = gm * gamma_p *0.1
+    return mu
+
+# 計算の実行
+Ip_default = input_data["calculation_gm"]["ip_default"]  # Ip のデフォルト値を取得
+gm = calculate_gm(input_data)                            # gm計算
+gamma_p = calculate_gamma_p(input_data)                 # γp計算
+mu = calculate_mu(gm, gamma_p)                          # μ計算
+
+# 結果の出力
+print(f"vp = {vp} V")
+print(f"vg = {vg} V")
+print(f"Ip = {Ip_default} mA")
+print(f"gm = {gm:.5f} Ω-1乗")
+print(f"gamma_p = {gamma_p:.5f} Ω")
+print(f"mu = {mu:.2f}")
