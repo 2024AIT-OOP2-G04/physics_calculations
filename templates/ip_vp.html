@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polynomial Approximation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+</head>
+<body>
+    <canvas id="chart" width="800" height="400"></canvas>
+
+    <script>
+        const datasets = [];
+
+        // データセット作成関数
+        function createDataset(label, xValues, yValues, color, type = 'line', pointRadius = 3, pointBackgroundColor = 'black') {
+            return {
+                label: label,
+                data: xValues.map((x, i) => ({ x, y: yValues[i] })),
+                borderColor: color,
+                backgroundColor: 'transparent',
+                type: type,
+                fill: false,
+                pointRadius: pointRadius,
+                pointBackgroundColor: pointBackgroundColor,
+            };
+        }
+
+
+        const inputData = {
+            "vg_minus6": [15.30, 18.45, 21.98],
+            "vg_minus8": [10.5, 12.83, 15.83],
+            "vg_minus10": [6.23, 8.38, 10.88]
+        };
+
+        const xValuesArray = [230, 250, 270];
+
+
+        for (const key in inputData) {
+            const yValues = inputData[key];
+            const dataset = createDataset(key, xValuesArray, yValues, 'rgba(255,0,0,1)', 'scatter', 5, 'red'); // データ点を赤く、大きく表示
+            datasets.push(dataset);
+            //多項式補完
+            const points = xValuesArray.map((x,i) => ({x:x, y:yValues[i]}));
+            const coefficients = polynomialApproximation(points, 2);
+            const approximatedYValues = xValuesArray.map(x => evaluatePolynomial(coefficients, x));
+            const approximatedDataset = createDataset(key + "_approximated", xValuesArray, approximatedYValues, 'rgba(0, 255, 0, 1)', 'line');
+            datasets.push(approximatedDataset);
+        }
+
+        // 最小二乗法で多項式係数を求める関数
+        function polynomialApproximation(points, degree) {
+            const x = points.map(p => p.x);
+            const y = points.map(p => p.y);
+
+            // Vandermonde行列を作成
+            const vandermonde = x.map(xi => Array.from({ length: degree + 1 }, (_, i) => Math.pow(xi, i)));
+            const X = math.matrix(vandermonde);
+
+            // 行列演算で係数を計算 (X^T * X)^-1 * X^T * Y
+            const XT = math.transpose(X);
+            const XTX = math.multiply(XT, X);
+            const XTX_inv = math.inv(XTX);
+            const XTY = math.multiply(XT, y);
+
+            return math.multiply(XTX_inv, XTY).toArray(); // 係数を配列として返す
+        }
+
+        // 近似多項式の値を計算する関数
+        function evaluatePolynomial(coefficients, x) {
+            return coefficients.reduce((sum, coef, i) => sum + coef * Math.pow(x, i), 0);
+        }
+
+
+        // Chart.jsでグラフを描画
+        const ctx = document.getElementById('chart').getContext('2d');
+        new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Vp'
+                        },
+                        min: 180,
+                        max: 320
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Ip'
+                        },
+                        min: 2,
+                        max: 30
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
