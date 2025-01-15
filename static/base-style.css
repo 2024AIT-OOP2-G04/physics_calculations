@@ -1,0 +1,19 @@
+.muranaka_message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: rgba(20, 20, 201, 0.7); /* ダークブルー、半透明 */
+  border-radius: 10px; /* 角丸 */
+  z-index: 1000; /* 他の要素の上に表示されるように */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4); /* 影 */
+  color: #fff;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(999px);
+  width: 520px;
+}
+.muranaka_message.open{
+  
+  transform: translateX(0);
+
+}

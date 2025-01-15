@@ -19,11 +19,9 @@ const message = schedule[currentDay] || "対応していません";
 console.log(`今日は ${currentDay}.`);
 console.log(`評価: ${message}`);
 
-//div作成
-const div = document.createElement('div');
+//村中メッセージの要素を取得
+const div = document.getElementById("muranaka_message")
 
 //テキスト内容を設定
-div.innerText = `評価: ${message}`;
+div.textContent = `評価: ${message}`;
 
-//作成したdivをbodyに追加
-document.body.appendChild(div);
