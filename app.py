@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import *
 from routes.api.graf.ip_vg_curve import ip_vg
 app = Flask(__name__)
 
@@ -10,9 +10,11 @@ def index():
 
 
 # ip_vg曲線のJSONを取得するAPI
-@app.route("/ip_vg_api")
+@app.route("/ip_vg_api",methods=["POST"])
 def ip_vg_api():
-    return ip_vg()
+    data = request.data.decode('utf-8')#デコード
+    print(data)
+    return ip_vg(data)
 
 
 if __name__ == "__main__":

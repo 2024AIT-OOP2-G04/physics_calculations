@@ -1,10 +1,16 @@
-document.addEventListener("DOMContentLoaded", () =>  {
+function showIpVgGraph(data){
 
     const ctx = document.getElementById("ip_vg_curve_graf").getContext("2d");
     const ctx2=document.getElementById("ip_vg_curve_graf2").getContext("2d");
 
-
-    fetch("/ip_vg_api")
+    
+    fetch("/ip_vg_api",{ // 送信先URL
+        method: 'post', // 通信メソッド
+        headers: {
+          'Content-Type': 'application/json' // JSON形式のデータのヘッダー
+        },
+        body: JSON.stringify(data) // JSON形式のデータ
+      })
         .then((res) => res.json())
         .then((data) => {
             // グラフを作成
@@ -79,11 +85,11 @@ document.addEventListener("DOMContentLoaded", () =>  {
                         },
             }}
             });
+            ctx2.fillStyle = 'black';
+            ctx2.fillRect(27, 32+31.03*(30-data['dousaten']), 400, 2); 
         },
-        
-        ctx2.fillRect(0, 0, 150, +data['dousa']) 
     )
         .catch((r) => {
           console.log("データ取得エラーです:", r);
         });
-});
+};

@@ -36,8 +36,8 @@ def jissuukai(fx,c):#実数解を求める
     return kai
 
 #@app.route("/ip_vg")
-def ip_vg():
-    s='{"input_ip_vg":{"vp_230":[0,0.10,0.5,1.48,3.30,6.23,10.05,15.30,21.75],"vp_250":[0.05,0.35,1.10,2.63,4.98,8.38,12.83,18.45,25.55],"vp_270":[0.25,0.83,2.03,4.08,6.95,10.88,15.83,21.98,29.53]}}'
+def ip_vg(s):
+    #s='{"input_ip_vg":{"vp_230":[0,0.10,0.5,1.48,3.30,6.23,10.05,15.30,21.75],"vp_250":[0.05,0.35,1.10,2.63,4.98,8.38,12.83,18.45,25.55],"vp_270":[0.25,0.83,2.03,4.08,6.95,10.88,15.83,21.98,29.53]}}'
     data = json.loads(s)
     x=[-20,-18,-16,-14,-12,-10,-8,-6,-4]
     y230=data['input_ip_vg']['vp_230']
@@ -58,8 +58,6 @@ def ip_vg():
     consen[0][0]=jissuukai(y,0)
     consen[1][0]=-6
     consen[1][1]=dainyu(y,-6)
-    print(dousaY)
-    print(consen)
     for j in range(3):
         ips[0][j]=jissuukai(fx1,dousaY-5+j*5)
         ips[1][j]=jissuukai(fx2,dousaY-5+j*5)
@@ -88,7 +86,6 @@ def ip_vg():
     #plt.plot(t,ya, label='a')
     #plt.legend()
     #plt.show()
-    print(dousaf)
     thisjsdata={"x":t,"vp230":y1,"vp250":y2,"vp270":y3,"sessen":ya,"dousaten":dousaY,"consen":consen,"dousaf":dousaf}
 
     return json.dumps(thisjsdata, cls=NumpyArrayEncoder)
