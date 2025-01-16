@@ -56,21 +56,32 @@ document.addEventListener("DOMContentLoaded", () =>  {
                     ]
                 },
                 options: {
-                    responsive: true,
-                    elements: {
+                    aspectRatio:0.67,
+                    elements:
+                    {
                      point:{
                      radius: 0
                      },
                     },
                     scales: {
+                        x:{
+                            ticks: {
+                                stepSize:1,
+                                maxTicksLimit:20,
+                            },
+                        },
                         y: {
                           min: 0,
-                          max: 30
+                          max: 30,
+                          ticks: {
+                            stepSize:1,
+                        },
                         },
             }}
             });
         },
-        ctx2.fillRect(0, 0, 150, 150) 
+        
+        ctx2.fillRect(0, 0, 150, +data['dousa']) 
     )
         .catch((r) => {
           console.log("データ取得エラーです:", r);
