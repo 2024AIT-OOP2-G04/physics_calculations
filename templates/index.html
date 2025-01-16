@@ -71,7 +71,7 @@
 
 <body>
   <div>
-    <canvas id="ip_vg_curve_graf" width="" height=""></canvas>
+    <canvas id="ip_vg_curve_graf" width="48" height="60"></canvas>
     <script src="/static/graf/ip_vg_curve.js"></script>
   </div>
   <div>
@@ -88,7 +88,7 @@
   <div>
     <script src="/static/comment/comment.js"></script>
   </div>
-
+  <div class="description">実験によって得られた数値から、平均値を計算し、その値をもとにグラフを表示するアプリです。</div>
   <h1>T12の計算</h1>
   計算結果の表示
   <button onclick="performCalculations()">計算を実行</button>
@@ -244,7 +244,7 @@
     <table>
       <tbody>
         <tr>
-          <td>基準のIp</td>
+          <th>基準のIp</th>
           <td><input type="number" id="row-0-inc-0" step="0.01" class="ip_default"></td>
         </tr>
       </tbody>
@@ -282,6 +282,8 @@
       </table>
       <button type="button" id="input_button">グラフ作成</button>
   </form>
+  <div class="muranaka_message" id="muranaka_message">saa</div>
+  <script src="/static/comment/comment.js"></script>
 </body>
 
 </html>
