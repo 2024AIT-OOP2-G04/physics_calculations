@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () =>  {
 
     const ctx = document.getElementById("ip_vg_curve_graf").getContext("2d");
+    const ctx2=document.getElementById("ip_vg_curve_graf2").getContext("2d");
 
 
     fetch("/ip_vg_api")
         .then((res) => res.json())
         .then((data) => {
-            console.log(data['vp230'])
             // グラフを作成
             new Chart(ctx, {
                 type: "line",    // グラフの種類
@@ -69,7 +69,9 @@ document.addEventListener("DOMContentLoaded", () =>  {
                         },
             }}
             });
-        })
+        },
+        ctx2.fillRect(0, 0, 150, 150) 
+    )
         .catch((r) => {
           console.log("データ取得エラーです:", r);
         });
