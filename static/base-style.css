@@ -20,3 +20,20 @@
 .description{
     text-align: right;
 }
+.ip_vg{
+    position: relative;
+    
+}
+.ip_vg canvas{
+    position: absolute;
+    left: 0;
+    top: 0; 
+}
+/*#ip_vg_curve_graf
+{
+position: relative;
+    width:  480px;
+    height: 600px;
+    overflow: hidden;
+    margin:20px;
+}*/
