@@ -1,9 +1,7 @@
 function showIpVgGraph(data){
 
     const ctx = document.getElementById("ip_vg_curve_graf").getContext("2d");
-    const ctx2=document.getElementById("ip_vg_curve_graf2").getContext("2d");
-
-    
+    const datasets = [];
     fetch("/ip_vg_api",{ // 送信先URL
         method: 'post', // 通信メソッド
         headers: {
@@ -13,53 +11,23 @@ function showIpVgGraph(data){
       })
         .then((res) => res.json())
         .then((data) => {
+            const xValuesArray = [data['consen'][0][0],-8,data['consen'][1][0]];
+            const yValuesArray = [data['consen'][0][1],data['dousaten'],data['consen'][1][1]];
+            let dataset = createDataset('ten', xValuesArray, yValuesArray, 'rgba(0,0,0,1)', 'scatter', 5, 'black');
+            datasets.push(dataset)
+            dataset = createDataset('sessen', data['x'], data['sessen'], 'rgba(0,0,0,1)', 'line', 1, 'black');
+            datasets.push(dataset)
+            dataset = createDataset('vp230', data['x'],data['vp230'], 'rgba(0,0,0,1)', 'line', 1, 'black');
+            datasets.push(dataset)
+            dataset = createDataset('vp250', data['x'], data['vp250'], 'rgba(0,0,0,1)', 'line', 1, 'black');
+            datasets.push(dataset)
+            dataset = createDataset('vp270', data['x'], data['vp270'], 'rgba(0,0,0,1)', 'line', 1, 'black');
+            datasets.push(dataset)
             // グラフを作成
             new Chart(ctx, {
-                type: "line",    // グラフの種類
-                data: { // Ｘ軸のラベル
-                    labels:  data['x'],
-                    datasets: [
-                        {
-                            label: "sessen",                      // 系列名
-                            data: data['sessen'],           // 系列Ａのデータ
-                            tension: 0,                         // ★　グラフの線、０ 直線,  ＞０ 曲線
-                            fill: false,                           // ★　線とＸ軸で囲まれた範囲の描画 true する, false しない 
-                            borderColor: "red",                   // グラフの線の色
-                            borderWidth: 1  
-                        },
-                        {
-                            label: "vp=230",                      // 系列名
-                            data: data['vp230'],           // 系列Ａのデータ
-                            tension: 0,                         // ★　グラフの線、０ 直線,  ＞０ 曲線
-                            fill: false,                           // ★　線とＸ軸で囲まれた範囲の描画 true する, false しない 
-                            borderColor: "brack",                   // グラフの線の色
-                            borderWidth: 1                        // グラフの線の太さ
-                        },
-                        {
-                            label: "vp=250",                      // 系列名
-                            data: data['vp250'],           // 系列Ａのデータ
-                            tension: 0,                         // ★　グラフの線、０ 直線,  ＞０ 曲線
-                            fill: false,                           // ★　線とＸ軸で囲まれた範囲の描画 true する, false しない 
-                            borderColor: "blue",                   // グラフの線の色
-                            borderWidth: 1                        // グラフの線の太さ
-                        },
-                        {
-                            label: "vp=270",                      // 系列名
-                            data: data['vp270'],           // 系列Ａのデータ
-                            tension: 0,                         // ★　グラフの線、０ 直線,  ＞０ 曲線
-                            fill: false,                           // ★　線とＸ軸で囲まれた範囲の描画 true する, false しない 
-                            borderColor: "green",                   // グラフの線の色
-                            borderWidth: 1                       // グラフの線の太さ
-                        },
-                        {
-                            label: "dousa",                      // 系列名
-                            data: data['dousaf'],           // 系列Ａのデータ
-                            tension: 0,                         // ★　グラフの線、０ 直線,  ＞０ 曲線
-                            fill: false,                           // ★　線とＸ軸で囲まれた範囲の描画 true する, false しない 
-                            borderColor: "brack",                   // グラフの線の色
-                            borderWidth: 1                        // グラフの線の太さ
-                        }
-                    ]
+                type: 'scatter',    // グラフの種類
+                data: {
+                    datasets: datasets
                 },
                 options: {
                     aspectRatio:0.67,
@@ -85,11 +53,22 @@ function showIpVgGraph(data){
                         },
             }}
             });
-            ctx2.fillStyle = 'black';
-            ctx2.fillRect(27, 32+31.03*(30-data['dousaten']), 400, 2); 
         },
     )
         .catch((r) => {
           console.log("データ取得エラーです:", r);
         });
 };
+// データセット作成関数
+function createDataset(label, xValues, yValues, color, type = 'line', pointRadius = 3, pointBackgroundColor = 'black') {
+    return {
+        label: label,
+        data: xValues.map((x, i) => ({ x, y: yValues[i] })),
+        borderColor: color,
+        backgroundColor: 'transparent',
+        type: type,
+        fill: false,
+        pointRadius: pointRadius,
+        pointBackgroundColor: pointBackgroundColor,
+    };
+}
