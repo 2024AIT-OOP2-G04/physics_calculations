@@ -17,3 +17,6 @@
   transform: translateX(0);
 
 }
+.description{
+    text-align: right;
+}
