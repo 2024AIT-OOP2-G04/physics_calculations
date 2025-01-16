@@ -173,3 +173,19 @@ figmaで作成中
 figmaにて雑PERT図を作成しました
 
 <https://www.figma.com/board/rifkiI1aJN4qKjaS06qPr6/Pert-Chart-Template-(Community)?node-id=0-1&t=Jk55dxfCwypw76M6-1>
+
+## 使用したライブラリ
+
+- numpy(**要pipインストール、以下参照**)
+- json (デフォルトでインストールされている)
+- matplotlib (pyplot)(**要pipインストール、以下参照**)
+- Chart.js (CDN経由)
+
+### ライブラリのインストール方法
+
+`numpy`と`matplotlib`は、Pythonのパッケージマネージャーである`pip`を使ってインストールできます。ターミナルまたはコマンドプロンプトを開き、以下のコマンドを実行してください。
+
+```bash
+pip install numpy matplotlib
+```
+
