@@ -69,6 +69,20 @@ const calculation_mu_data = {
 
 // 計算を実行
 function performCalculations() {
+    console.error(parseFloat(document.getElementById('ip_default').value));
+
+    //gmの計算
+    calculation_gm_data.calculation_gm.ip_default = parseFloat(document.getElementById('ip_default').value);
+    calculation_gm_data.calculation_gm.vg_minus6_ip = parseFloat(document.getElementById('vg_minus6_ip').value);
+    calculation_gm_data.calculation_gm.ip_0_vg = parseFloat(document.getElementById('ip_0_vg').value);
+    //gamm_pの計算
+    calculation_gamma_p_data.calculation_gamma_p.vp_180_ip = parseFloat(document.getElementById('vp_180_ip').value);
+    calculation_gamma_p_data.calculation_gamma_p.vp_300_ip = parseFloat(document.getElementById('vp_300_ip').value);
+    //muの計算
+    calculation_mu_data.calculation_mu.vp_180_vg = parseFloat(document.getElementById('vp_180_vg').value);
+    calculation_mu_data.calculation_mu.vp_300_vg = parseFloat(document.getElementById('vp_300_vg').value);
+
+
     const gm = calculate_gm(calculation_gm_data);
     const gamma_p = calculate_gamma_p(calculation_gamma_p_data);
     const mu = calculate_mu(gm, gamma_p);
@@ -76,10 +90,50 @@ function performCalculations() {
 
     // 結果をHTMLに表示
     document.getElementById('result-vp').textContent = 'vp = 250.0 V';
-    document.getElementById('result-vg').textContent = 'vg = -8.00 V';
-    document.getElementById('result-ip').textContent = 'Ip = ' + calculation_gm_data.calculation_gm.ip_default.toFixed(2) + ' mA';
-    document.getElementById('result-gm').textContent = 'gm = ' + gm.toFixed(6) + ' Ω⁻¹';
-    document.getElementById('result-gamma-p').textContent = 'gamma_p = ' + gamma_p.toFixed(2) + ' Ω';
-    document.getElementById('result-mu').textContent = 'μ (gm・gamma_p) = ' + mu.toFixed(2);
-    document.getElementById('result-myu').textContent = 'μ (vp-vg) = ' + myu.toFixed(2);
+document.getElementById('result-vg').textContent = 'vg = -8.00 V';
+document.getElementById('result-ip').textContent = 
+    'Ip = ' + calculation_gm_data.calculation_gm.ip_default.toFixed(2) + ' mA';
+
+// gm の分数表記
+document.getElementById('result-gm').innerHTML = 
+    `<br>gm = <div style="display: inline-block; text-align: center;">
+        <div>${calculation_gm_data.calculation_gm.vg_minus6_ip} × 10<sup>-3</sup> A</div>
+        <div style="border-top: 1px solid black;">( 13.20 - 6.00 ) V</div>
+    </div> = ${gm.toFixed(6)} Ω⁻¹`;
+
+// γp の分数表記
+document.getElementById('result-gamma-p').innerHTML = 
+    `<br>γp = <div style="display: inline-block; text-align: center;">
+        <div>(300 - 180) V</div>
+        <div style="border-top: 1px solid black;">
+            ${'( '+calculation_gamma_p_data.calculation_gamma_p.vp_300_ip} - 
+            ${calculation_gamma_p_data.calculation_gamma_p.vp_180_ip+' )A'}
+        </div>
+    </div> = ${gamma_p.toFixed(2)} Ω`;
+
+// μ (gm × γp) 
+document.getElementById('result-mu').innerHTML = 
+    `<br>μ (gm × γp) = <div style="display: inline-block; text-align: center;">
+        <div>( ${gm.toFixed(6)} Ω⁻¹ )</div>
+        <div style="border-top: 1px solid black;">${gamma_p.toFixed(2)} Ω</div>
+    </div> = ${mu.toFixed(2)}`;
+
+// μ (vp-vg) の分数表記
+document.getElementById('result-myu').innerHTML = 
+    `<br>μ (vp-vg) = <div style="display: inline-block; text-align: center;">
+        <div>(300 - 180) V</div>
+        <div style="border-top: 1px solid black;">
+            ${'('+Math.abs(calculation_mu_data.calculation_mu.vp_300_vg)} - 
+            ${Math.abs(calculation_mu_data.calculation_mu.vp_180_vg)+')'}
+        </div>
+    </div> = ${myu.toFixed(2)}`;
+
+
+    //document.getElementById('result-vp').textContent = 'vp = 250.0 V';
+    //document.getElementById('result-vg').textContent = 'vg = -8.00 V';
+    //document.getElementById('result-ip').textContent = 'Ip = ' + calculation_gm_data.calculation_gm.ip_default.toFixed(2) + ' mA';
+    //document.getElementById('result-gm').textContent = 'gm = ' + calculation_gm_data.calculation_gm.vg_minus6_ip +'×10^-3A' + ' / ' + '(13.20 - 6.00)V = ' + gm.toFixed(6) + ' Ω⁻¹';
+    //document.getElementById('result-gamma-p').textContent  ='γp= (300 - 180)V  /  ' + '(' + calculation_gamma_p_data.calculation_gamma_p.vp_300_ip +' - ' + calculation_gamma_p_data.calculation_gamma_p.vp_180_ip +') = ' + 3.00 + gamma_p.toFixed(2) +  'Ω';
+    //document.getElementById('result-mu').textContent = 'μ (gm×γp) = ' +'( ' + gm.toFixed(6) + ' Ω⁻¹) × '+'('+ gamma_p.toFixed(2) +  'Ω )' + ' = '+ mu.toFixed(2);
+    //document.getElementById('result-myu').textContent = 'μ (vp-vg) = ' + '(300 - 180)V  /  ( ' + calculation_mu_data.calculation_mu.vp_300_vg +' - ' + calculation_mu_data.calculation_mu.vp_180_vg + ' ) ='+ myu.toFixed(2);
 }

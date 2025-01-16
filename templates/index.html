@@ -107,37 +107,20 @@
 </script>
 
 <body>
-  <div class="ip_vg" style="position:relative;width:1000px;height:1000px;">
-    <canvas id="ip_vg_curve_graf" width="300" height=""></canvas>
-    <script src="/static/graf/ip_vg_curve.js"></script>
-  </div>
-  <div>
-    <canvas id="ip_vp_curve_graf" width="" height=""></canvas>
-    <script src="/static/graf/ip_vp_curve.js"></script>
-  </div>
-  <div>
-    <canvas id="vp_vg_curve_graf" width="" height=""></canvas>
-    <script src="/static/graf/vp_vg_curve.js"></script>
-  </div>
   <div>
     <script src="/static/calculations/calculations_a.js"></script>
   </div>
   <div>
     <script src="/static/comment/comment.js"></script>
   </div>
-  <div class="description">実験によって得られた数値から、平均値を計算し、その値をもとにグラフを表示するアプリです。</div>
-  <h1>T12の計算</h1>
-  計算結果の表示
-  <button onclick="performCalculations()">計算を実行</button>
-
-  <div class="result" id="result-vp">vp = </div>
-  <div class="result" id="result-vg">vg = </div>
-  <div class="result" id="result-ip">Ip = </div>
-  <div class="result" id="result-gm">gm = </div>
-  <div class="result" id="result-gamma-p">gamma_p = </div>
-  <div class="result" id="result-mu">μ (gm・gamma_p) = </div>
-  <div class="result" id="result-myu">μ (vp-vg) = </div>
-
+  <div>実験によって得られた数値から、平均値を計算し、その値をもとにグラフを表示するアプリです。</div>
+  <div >＊使い方</div>
+    <div>ステップ1：IP＿VG特性曲線の入力フォームに実験で得られた数値を代入​</div>
+    <div>ステップ2：「平均値を出力」ボタンをタップし平均値を出力​</div>
+    <div>ステップ3：グラフ作成ボタンをタップしグラフの作成​</div>
+    <div>ステップ4：グラフから値をよみとり計算用データの入力​</div>
+    <div>ステップ5：「計算を実行」ボタンをタップし計算結果の出力</div>
+  
   <h2>Ip_Vg特性曲線</h2>
   <form onsubmit="handleSubmit(event)">
     <table>
@@ -319,6 +302,67 @@
       </table>
       <button type="button" id="input_button">グラフ作成</button>
   </form>
+    
+  <h2>グラフ</h2>
+  <div>
+    <canvas id="ip_vg_curve_graf" width="48" height="60"></canvas>
+    <script src="/static/graf/ip_vg_curve.js"></script>
+  </div>
+  <div>
+    <canvas id="ip_vp_curve_graf" width="" height=""></canvas>
+    <script src="/static/graf/ip_vp_curve.js"></script>
+  </div>
+  <div>
+    <canvas id="vp_vg_curve_graf" width="" height=""></canvas>
+    <script src="/static/graf/vp_vg_curve.js"></script>
+  </div>
+  
+  <div>
+    <br>
+    <label for="ip_default">動作点の Ip:</label>
+  <input type="number" id="ip_default" step="0.01" class="vg_minus5" value=12.90>
+  <br>
+  <label for="ivg_minus6_ip">Vg = -6 のときの Ip:</label>
+  <input type="number" id="vg_minus6_ip" step="0.01" class="vg_minus5" value=17.70>
+  <br>
+  <label for="ip_0_vg">Ip = 0 のときの Vg:</label>
+  <input type="number" id="ip_0_vg" step="0.01" class="vg_minus5" value=-13.20>
+</div>
+
+<div>
+  <h3>γp 計算用</h3>
+  <label for="vp_180_ip">Vp = 180 のときの Ip:</label>
+  <input type="number" id="vp_180_ip" step="0.01" class="vg_minus5" value=3.00>
+  <br>
+  <label for="vp_300_ip">Vp = 300 のときの Ip:</label>
+  <input type="number" id="vp_300_ip" step="0.01" class="vg_minus5" value=20.3>
+</div>
+
+<div>
+  <h3>μ 計算用</h3>
+  <label for="vp_180_vg">Vp = 180 のときの Vg:</label>
+  <input type="number" id="vp_180_vg" step="0.01" class="vg_minus5" value=-3.90>
+  <br>
+  <label for="vp_300_vg">Vp = 300 のときの Vg:</label>
+  <input type="number" id="vp_300_vg" step="0.01" class="vg_minus5" value=-10.803>
+  <br><br><br>
+</div>
+
+
+<h4>T12の計算</h4>
+  計算結果の表示
+  <button onclick="performCalculations()">計算を実行</button>
+
+  <div class="result" id="result-vp">vp = </div>
+  <div class="result" id="result-vg">vg = </div>
+  <div class="result" id="result-ip">Ip = </div>
+  <div class="result" id="result-gm">gm = </div>
+  <div class="result" id="result-gamma-p">gamma_p = </div>
+  <div class="result" id="result-mu">μ (gm・gamma_p) = </div>
+  <div class="result" id="result-myu">μ (vp-vg) = </div>
+  <br>  <br>  <br>
+
+
   <div class="muranaka_message" id="muranaka_message">saa</div>
   <script src="/static/comment/comment.js"></script>
   <script>
