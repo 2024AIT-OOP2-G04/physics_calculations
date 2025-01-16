@@ -88,7 +88,19 @@
   <div>
     <script src="/static/comment/comment.js"></script>
   </div>
+
   <h1>T12の計算</h1>
+  計算結果の表示
+  <button onclick="performCalculations()">計算を実行</button>
+
+  <div class="result" id="result-vp">vp = </div>
+  <div class="result" id="result-vg">vg = </div>
+  <div class="result" id="result-ip">Ip = </div>
+  <div class="result" id="result-gm">gm = </div>
+  <div class="result" id="result-gamma-p">gamma_p = </div>
+  <div class="result" id="result-mu">μ (gm・gamma_p) = </div>
+  <div class="result" id="result-myu">μ (vp-vg) = </div>
+
   <h2>Ip_Vg特性曲線</h2>
   <form onsubmit="handleSubmit(event)">
     <table>

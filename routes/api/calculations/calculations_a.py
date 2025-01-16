@@ -1,4 +1,8 @@
+from flask import Flask, request, jsonify
 import numpy as np
+import json
+
+app = Flask(__name__)
 
 # 初期設定
 vp = 250.0  # プレート電圧
@@ -120,3 +124,6 @@ print(f"gm = {gm:.6f} Ω-1乗")
 print(f"gamma_p = {gamma_p:.2f} Ω")
 print(f"μ (gm・γp) = {mu:.2f}")
 print(f"μ (vp-vg) = {myu:.2f}")
+
+if __name__ == '__main__':
+    app.run(debug=True)
