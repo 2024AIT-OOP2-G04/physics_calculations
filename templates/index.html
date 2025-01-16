@@ -31,6 +31,11 @@
 </style>
 <script>
   // 平均値を計算する関数
+  const input_ip_vp = {
+    "vg_minus6": [],
+    "vg_minus8": [],
+    "vg_minus10": []
+  };
   function updateAverage(rowIndex) {
     // 増加過程と減少過程の入力値を取得
     const incValue0 = parseFloat(document.getElementById(`row-${rowIndex}-inc-0`).value) || 0;
@@ -52,6 +57,15 @@
     document.getElementById(`row-${rowIndex}-avg-0`).textContent = num0.toFixed(2);
     document.getElementById(`row-${rowIndex}-avg-1`).textContent = num1.toFixed(2);
     document.getElementById(`row-${rowIndex}-avg-2`).textContent = num2.toFixed(2);
+
+    const object_allocation = { 5: `vg_minus10`, 6: `vg_minus8`, 7: `vg_minus6`}//rowIndexとオブジェクトの割り当て
+    if (rowIndex >= 5 && rowIndex <= 7) {//グラフ表示用のオブジェクトの作成s
+        const key = object_allocation[rowIndex];
+        input_ip_vp[key][0] = num0;
+        input_ip_vp[key][1] = num1;
+        input_ip_vp[key][2] = num2;
+    }
+
   }
 
   // すべての行と列で平均値を計算
@@ -66,6 +80,18 @@
   function handleSubmit(event) {
     event.preventDefault(); // ページリロードを防ぐ
     calculateAllAverages(); // 平均値を計算
+  }
+
+  // グラフ作成ボタンのイベントリスナーを追加
+  function handleGraphDisplay() {
+    showIpVpGraph(input_ip_vp);
+    const muranakaMessage = document.querySelector('.muranaka_message');
+    if (muranakaMessage) {
+      muranakaMessage.classList.add('open');
+      setTimeout(() => {
+        muranakaMessage.classList.remove('open');
+      }, 5000);
+    }
   }
 </script>
 
@@ -285,6 +311,9 @@
   </form>
   <div class="muranaka_message" id="muranaka_message">saa</div>
   <script src="/static/comment/comment.js"></script>
+  <script>
+      document.getElementById('input_button').addEventListener('click', handleGraphDisplay);
+  </script>
 </body>
 
 </html>

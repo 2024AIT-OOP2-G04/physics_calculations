@@ -1,3 +1,4 @@
+window.onload = function() {
 //曜日ごとのコメント
 const schedule = {
     月曜日: "村中＠ＧＰＴです。\nT１２は良いのではないでしょうか。\nもう少し何とか丁寧な字を書けないものでしょうかね。\n村中の講義では字が汚いことは認識していますが、流れや勢いが削がれるよりは、良いと思っています。\nそういう状況ではないので、もう少し次回から丁寧に。\nでは、",
@@ -24,4 +25,4 @@ const div = document.getElementById("muranaka_message")
 
 //テキスト内容を設定
 div.textContent = `評価: ${message}`;
-
+}
