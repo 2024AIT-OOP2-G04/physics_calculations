@@ -65,6 +65,7 @@ function showIpVpGraph(yValuesArray) {
 function drawChart(datasets) {
     // Chart.jsでグラフを描画
     const ctx = document.getElementById('ip_vp_curve_graf').getContext('2d');
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     new Chart(ctx, {
         type: 'scatter',
         data: {
