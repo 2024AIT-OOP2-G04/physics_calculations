@@ -36,6 +36,13 @@
     "vg_minus8": [],
     "vg_minus10": []
   };
+  const input_ip_vg={
+    "input_ip_vg":{
+      "vp_230":[],
+      "vp_250":[],
+      "vp_270":[],
+    }
+  }
   function updateAverage(rowIndex) {
     // 増加過程と減少過程の入力値を取得
     const incValue0 = parseFloat(document.getElementById(`row-${rowIndex}-inc-0`).value) || 0;
@@ -59,6 +66,9 @@
     document.getElementById(`row-${rowIndex}-avg-2`).textContent = num2.toFixed(2);
 
     const object_allocation = { 5: `vg_minus10`, 6: `vg_minus8`, 7: `vg_minus6`}//rowIndexとオブジェクトの割り当て
+        input_ip_vg["input_ip_vg"]["vp_230"][rowIndex] = num0;
+        input_ip_vg["input_ip_vg"]["vp_250"][rowIndex] = num1;
+        input_ip_vg["input_ip_vg"]["vp_270"][rowIndex] = num2;
     if (rowIndex >= 5 && rowIndex <= 7) {//グラフ表示用のオブジェクトの作成s
         const key = object_allocation[rowIndex];
         input_ip_vp[key][0] = num0;
@@ -85,6 +95,7 @@
   // グラフ作成ボタンのイベントリスナーを追加
   function handleGraphDisplay() {
     showIpVpGraph(input_ip_vp);
+    showIpVgGraph(input_ip_vg);
     const muranakaMessage = document.querySelector('.muranaka_message');
     if (muranakaMessage) {
       muranakaMessage.classList.add('open');
@@ -96,8 +107,9 @@
 </script>
 
 <body>
-  <div>
-    <canvas id="ip_vg_curve_graf" width="48" height="60"></canvas>
+  <div class="ip_vg" style="position:relative;width:1000px;height:1000px;">
+    <canvas id="ip_vg_curve_graf" width="300" height=""></canvas>
+    <canvas id="ip_vg_curve_graf2" width="822" height="1027"></canvas>
     <script src="/static/graf/ip_vg_curve.js"></script>
   </div>
   <div>
