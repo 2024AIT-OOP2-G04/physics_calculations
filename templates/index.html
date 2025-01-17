@@ -93,9 +93,10 @@
   }
 
   // グラフ作成ボタンのイベントリスナーを追加
-  function handleGraphDisplay() {
+  async function handleGraphDisplay() {
     showIpVpGraph(input_ip_vp);
-    showIpVgGraph(input_ip_vg);
+    let ips=await showIpVgGraph(input_ip_vg);
+    showVpVgGraph(ips);
     const muranakaMessage = document.querySelector('.muranaka_message');
     if (muranakaMessage) {
       muranakaMessage.classList.add('open');

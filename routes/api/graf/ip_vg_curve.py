@@ -47,9 +47,11 @@ def ip_vg(s):
     fx2=np.polyfit(x, y250, 3)
     fx3=np.polyfit(x, y270, 3)
     dfx2=bibun(fx2)
+    fxlist=[fx1,fx2,fx3]
     y=sessensiki(dfx2,fx2,-8)  #250.0Vでのx＝ー８における接線の式を求める
     dousaY=dainyu(fx2,-8)       #動作点を求める           
-    ips=np.zeros((3, 3))#vp_vgにおける点を求める  
+    #vp_vgにおける点を求める  
+    ips={"ip="+str(dousaY-5):[],"ip="+str(dousaY):[],"ip="+str(dousaY+5):[]}
                                                         #     動作点−５、動作点、動作点＋５ 
                                                         #230V[                        ]
                                                         #250V[                        ]
@@ -59,9 +61,9 @@ def ip_vg(s):
     consen[1][0]=-6
     consen[1][1]=dainyu(y,-6)
     for j in range(3):
-        ips[0][j]=jissuukai(fx1,dousaY-5+j*5)
-        ips[1][j]=jissuukai(fx2,dousaY-5+j*5)
-        ips[2][j]=jissuukai(fx3,dousaY-5+j*5)
+        ips["ip="+str(dousaY-5)].append(jissuukai(fxlist[j],dousaY-5))
+        ips["ip="+str(dousaY)].append(jissuukai(fxlist[j],dousaY))
+        ips["ip="+str(dousaY+5)].append(jissuukai(fxlist[j],dousaY+5))
     t=[]
     t2=[]
     dousaf=[]
@@ -86,7 +88,7 @@ def ip_vg(s):
     #plt.plot(t,ya, label='a')
     #plt.legend()
     #plt.show()
-    thisjsdata={"x":t,"vp230":y1,"vp250":y2,"vp270":y3,"sessen":ya,"dousaten":dousaY,"consen":consen,"dousaf":dousaf}
+    thisjsdata={"x":t,"vp230":y1,"vp250":y2,"vp270":y3,"sessen":ya,"dousaten":dousaY,"consen":consen,"dousaf":dousaf,"ips":ips}
 
     return json.dumps(thisjsdata, cls=NumpyArrayEncoder)
 
