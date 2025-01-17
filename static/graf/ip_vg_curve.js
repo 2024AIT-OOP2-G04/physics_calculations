@@ -1,8 +1,8 @@
-function showIpVgGraph(data){
-
+async function showIpVgGraph(data){
+    let ips={};
     const ctx = document.getElementById("ip_vg_curve_graf").getContext("2d");
     const datasets = [];
-    fetch("/ip_vg_api",{ // 送信先URL
+    await fetch("/ip_vg_api",{ // 送信先URL
         method: 'post', // 通信メソッド
         headers: {
           'Content-Type': 'application/json' // JSON形式のデータのヘッダー
@@ -15,6 +15,7 @@ function showIpVgGraph(data){
             const yValuesArray = [data['consen'][0][1],data['dousaten'],data['consen'][1][1]];
             let dataset = createDataset('ten', xValuesArray, yValuesArray, 'rgba(0,0,0,1)', 'scatter', 5, 'black');
             datasets.push(dataset)
+            
             dataset = createDataset('sessen', data['x'], data['sessen'], 'rgba(0,0,0,1)', 'line', 1, 'black');
             datasets.push(dataset)
             dataset = createDataset('vp230', data['x'],data['vp230'], 'rgba(0,0,0,1)', 'line', 1, 'black');
@@ -39,12 +40,20 @@ function showIpVgGraph(data){
                     },
                     scales: {
                         x:{
+                            title: {
+                                display: true,
+                                text: 'Vg[V]'
+                            },
                             ticks: {
                                 stepSize:1,
                                 maxTicksLimit:20,
                             },
                         },
                         y: {
+                            title: {
+                                display: true,
+                                text: 'Ip[mA]'
+                            },
                           min: 0,
                           max: 30,
                           ticks: {
@@ -53,11 +62,13 @@ function showIpVgGraph(data){
                         },
             }}
             });
+            ips=data['ips']
         },
     )
         .catch((r) => {
           console.log("データ取得エラーです:", r);
         });
+        return ips
 };
 // データセット作成関数
 function createDataset(label, xValues, yValues, color, type = 'line', pointRadius = 3, pointBackgroundColor = 'black') {
